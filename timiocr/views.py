@@ -26,8 +26,7 @@ def home(request):
 # Set image_url to the URL of an image that you want to recognize.
         image_url = 'https://hardtotext2' + file_url
         headers = {'Ocp-Apim-Subscription-Key': subscription_key}
-        im='/home/abiola/Pictures/Screenshot from 2022-01-04 13-56-52.png'
-        imageu=open(im,'rb')
+
         data = {'url': image_url}
         response = requests.post(
             text_recognition_url, headers=headers, json=data)
