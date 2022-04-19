@@ -24,7 +24,7 @@ def home(request):
         text_recognition_url = endpoint + "/vision/v3.1/read/analyze"
 
 # Set image_url to the URL of an image that you want to recognize.
-        image_url = 'https://hardtotext2/media/'+ upload.name
+        image_url = 'https://hardtotext2.herokuapp.com/media/'+ upload.name
         headers = {'Ocp-Apim-Subscription-Key': subscription_key}
 
         data = {'url': image_url}
