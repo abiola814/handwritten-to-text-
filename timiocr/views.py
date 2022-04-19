@@ -24,7 +24,7 @@ def home(request):
         text_recognition_url = endpoint + "/vision/v3.1/read/analyze"
 
 # Set image_url to the URL of an image that you want to recognize.
-        image_url = 'https://hardtowrite2' + file_url
+        image_url = 'https://hardtotext2' + file_url
         headers = {'Ocp-Apim-Subscription-Key': subscription_key}
         im='/home/abiola/Pictures/Screenshot from 2022-01-04 13-56-52.png'
         imageu=open(im,'rb')

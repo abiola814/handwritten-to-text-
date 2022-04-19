@@ -1,1 +1,1 @@
-web: gunicorn ledger.wsgi
+web: gunicorn timiocr.wsgi
