@@ -72,7 +72,7 @@ def home(request):
             final=final+ wordss
             hs=open("hest.txt","a")
             hs.write(text + "\n")
-
-        return render(request, 'base.html', {'file_url':file_url})
+        file='/media/'+ upload.name
+        return render(request, 'base.html', {'file_url':file})
 
     return render(request,"base.html",)
