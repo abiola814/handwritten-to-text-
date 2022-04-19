@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <form action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+                                    {%csrf_token%}
+  <label for="fname">First name:</label>
+
+ <input type="file" name='upload' id="file-upload" name="attachment" required>
+  <button class="btn btn-dark my-4" type="submit">Submit</button>
+</form>
+
+  <h2 class="my-4">Movie Poster</h2>
+          <div class="row">
+            {% for i in file_url %}
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+              <img src="{{ i }}" class="img-fluid">
+              <br>
+              <a class="btn btn-dark my-4" href="/">Return to Homepage</a>
+            {% empty %}
+            <p>No movies posters added.</p>
+            {% endfor %}
+          </div>
+
+        </div>
+</body>
+</html>
