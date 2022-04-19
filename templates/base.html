@@ -12,14 +12,14 @@
 
   <h2 class="my-4">Movie Poster</h2>
           <div class="row">
-            {% for i in file_url %}
+            {% if file_url %}
             <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-              <img src="{{ i }}" class="img-fluid">
+              <img src="{{ file_url }}" class="img-fluid">
               <br>
               <a class="btn btn-dark my-4" href="/">Return to Homepage</a>
-            {% empty %}
+            {% else %}
             <p>No movies posters added.</p>
-            {% endfor %}
+            {% endif %}
           </div>
 
         </div>
