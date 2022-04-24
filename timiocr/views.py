@@ -1,3 +1,4 @@
+from atexit import register
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 
@@ -7,11 +8,13 @@ import sys
 import requests
 import time
 from io import BytesIO
+from main.models import Register
+from docx import Document
 
 missing_env = False
 # Add your Computer Vision subscription key and endpoint to your environment variables.
 
-
+doc = Document()
 
 def home(request):
     if request.method == 'POST' and request.FILES['upload']:
@@ -70,9 +73,18 @@ def home(request):
             wordss=str(text)
 
             final=final+ wordss
-            hs=open("hest.txt","a")
+            hs=open("media/specs/hesjtigs.txt","a")
             hs.write(text + "\n")
-        file='/media/'+ upload.name
-        return render(request, 'base.html', {'file_url':file})
+            hs.close()
+        files='/media/'+ upload.name
 
-    return render(request,"base.html",)
+        g=Register.objects.create(text="specs/hesjtigs.txt")
+        h=Register.objects.get(text="specs/hesjtigs.txt")
+        print(h.text.url)
+        with open("media/specs/hesjt.txt", 'r', encoding='utf-8') as openfile:
+            line = openfile.read()
+            doc.add_paragraph(line)
+            doc.save('file' + ".docx")
+        return render(request, 'base.html', {'file_url':files,'urlu':h.text.url})
+
+    return render(request,"index.html",)
