@@ -8,7 +8,22 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Camera selection</title>
   <link rel="stylesheet" href="{% static 'app.css' %}" />
+<style>
+  .container{
+    position: relative;
+}
 
+.container>.player-buttons{
+    background: url('http://cdn1.iconfinder.com/data/icons/iconslandplayer/PNG/64x64/CircleBlue/Play1Pressed.png') center center no-repeat;
+    height: 128px;
+    left: 50%;
+    margin: -64px 0 0 -64px;
+    position: absolute;
+    top: 50%;
+    width: 128px;
+    z-index: 1; 
+}
+</style>
 </head>
 
 <body>
@@ -24,16 +39,17 @@
         <option></option>
       </select>
     </div>
-
+<div class="container">
     <video id="video" autoplay playsinline></video>
     
-    <button id="click-photo">Click Photo</button>
+    <div id="click-photo" class="player-buttons"></div>
+  </div>
 <canvas id="canvas" width="320" height="240"></canvas>
   </main>
 
   <footer>
     <p>Built by
-      <a href="https://twitter.com/philnash">@philnash</a>
+      <a href="#">@pastor timi</a>
     </p>
   </footer>
 
