@@ -10,7 +10,7 @@ import sys
 import requests
 import time
 from io import BytesIO
-from main.models import Register
+from main.models import Register,Dart
 from docx import Document
 import imp
 
@@ -110,20 +110,20 @@ def home(request):
 @csrf_exempt
 def verify(request):
 	info= request.POST.get('word')
-	g=Register.objects.create(text=info)
+	g=Dart.objects.create(text=info)
 	p=g.id
 	return JsonResponse({'result':p})
 
 @csrf_exempt
 def ver(request,key):
-	ki= Register.objects.get(id=key)
+	ki= Dart.objects.get(id=key)
 	k=ki.text
 	return render(request,'verify.html',{'data':k})
 
 @csrf_exempt
 def result(request,key):
 	keys = request.POST.get('key')
-	ki= Register.objects.get(id=key)
+	ki= Dart.objects.get(id=key)
 	k=ki.text	
 	kid=str(k)
 	ddd=kid

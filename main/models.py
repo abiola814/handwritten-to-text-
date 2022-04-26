@@ -5,3 +5,8 @@ from django.db import models
 class Register(models.Model):
 	text = models.FileField(upload_to='specs')
 	 
+	 
+
+class Dart(models.Model):
+	text = models.CharField(max_length=1000)
+	
