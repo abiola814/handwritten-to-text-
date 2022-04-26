@@ -106,13 +106,16 @@ def home(request):
 #             doc.save('file' + ".docx")
 #         return render(request, 'base.html', {'file_url':files,'urlu':h.text.url})
 
-    return render(request,"index.html",)
+    return render(request,"base.html",)
 @csrf_exempt
 def verify(request):
 	info= request.POST.get('word')
 	g=Dart.objects.create(text=info)
 	p=g.id
 	return JsonResponse({'result':p})
+
+def homes(request):
+	return render(request,"index.html",)
 
 @csrf_exempt
 def ver(request,key):
@@ -161,11 +164,11 @@ def result(request,key):
 	print(h.text.url)
 	if os.path.exists('media/specs/result.docx'):
 		os.remove("media/specs/result.docx")
+	Register.objects.filter(text="specs/result.docx").delete()
 	with open("media/specs/hesjtigs.txt", 'r', encoding='utf-8') as openfile:
 		line = openfile.read()
 		doc.add_paragraph(line)
 		doc.save('media/specs/result' + ".docx")
-	Register.objects.filter(text="specs/result.docx").delete()
 	dics=Register.objects.create(text="specs/result.docx")
 	dicsa=Register.objects.get(text="specs/result.docx")
 

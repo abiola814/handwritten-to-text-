@@ -71,7 +71,7 @@ click_button.addEventListener('click', function() {
       success: function(data) {
       
 
-          window.location.href='https://handtotext2.herokuapp.com/ver/'+ data.result
+          window.location.href='http://127.0.0.1:8000/ver/'+ data.result
 
       console.log("worked")
       },
