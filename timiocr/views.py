@@ -151,6 +151,7 @@ def result(request,key):
 				wordss=str(line.text)
 
 				final=final+ wordss
+				print(final)
 				hs=open("media/specs/hesjtigs.txt","a")
 				hs.write(line.text + "\n")
 				hs.close()
