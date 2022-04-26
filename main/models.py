@@ -8,5 +8,5 @@ class Register(models.Model):
 	 
 
 class Dart(models.Model):
-	text = models.CharField(max_length=1000)
+	text = models.CharField(max_length=100000)
 	
