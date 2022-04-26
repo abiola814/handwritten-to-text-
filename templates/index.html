@@ -8,6 +8,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Camera selection</title>
   <link rel="stylesheet" href="{% static 'app.css' %}" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="{%  static 'js/jquery-3.6.0.js' %}" crossorigin="anonymous"></script>
+
 <style>
   .container{
     position: relative;
@@ -40,8 +43,9 @@
       </select>
     </div>
 <div class="container">
+  {{ csrf_token}}
     <video id="video" autoplay playsinline></video>
-    
+
     <div id="click-photo" class="player-buttons"></div>
   </div>
 <canvas id="canvas" width="320" height="240"></canvas>

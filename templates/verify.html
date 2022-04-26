@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Camera selection</title>
+  <link rel="stylesheet" href="{% static 'app.css' %}" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="{%  static 'js/jquery-3.6.0.js' %}" crossorigin="anonymous"></script>
+
+<style>
+  .container{
+    position: relative;
+}
+
+.container>.player-buttons{
+    background: url('http://cdn1.iconfinder.com/data/icons/iconslandplayer/PNG/64x64/CircleBlue/Play1Pressed.png') center center no-repeat;
+    height: 128px;
+    left: 50%;
+    margin: -64px 0 0 -64px;
+    position: absolute;
+    top: 50%;
+    width: 128px;
+    z-index: 1; 
+}
+</style>
+</head>
+
+<body>
+
+  <header>
+    <h1>view frame</h1>
+  </header>
+
+  <main>
+<img class="img-icons" src="{{data}}" alt="Eidoo">
+  </main>
+                
+<button type="button" id="button" > convert </button>
+
+<a href="" id="wtype">dowmload text file</a>
+
+<a href="" id="wtypes">dowmload doc file</a>
+  <footer>
+    <p>Built by
+      <a href="#">@pastor timi</a>
+    </p>
+  </footer>
+
+  <script>
+$("button").click(function(e) {
+    e.preventDefault();
+ 
+              console.log('form submitted')
+              let keys = "{{data}}";
+     
+              $.ajax({
+                 type: 'POST',
+                 url: "result/",
+                 data: {
+                    word: keys,
+                    csrfmiddlewaretoken:$ ("input[name=csrfmiddlewaretoken]").val(), 
+                    dataType: "json",
+                    action : 'post'
+                    
+                        },
+                 success: function(data) {
+                   console.log(data.data)
+                  document.getElementById("wtype").href=data.data;
+                  document.getElementById("wtypes").href=data.result;                
+                  
+                 },
+                 error: function (xhr,errmsg,err) {
+                    // alert the error if any error occured
+                    alert(["error check your internet connection"]);
+                    console.log('form error')
+                }
+           
+            });
+           })
+  </script>
+</body>
+
+</html>

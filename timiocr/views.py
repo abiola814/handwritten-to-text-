@@ -1,6 +1,8 @@
 from atexit import register
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 import json
 import os
@@ -9,12 +11,29 @@ import requests
 import time
 from io import BytesIO
 from main.models import Register
-# from docx import Document
+from docx import Document
+import imp
+
+
+import os
+import io
+from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes,VisualFeatureTypes
+import requests
+import time
+from PIL import Image,ImageDraw,ImageFont
+
+
+from binascii import a2b_base64
+from base64 import b64decode
 
 # missing_env = False
 # # Add your Computer Vision subscription key and endpoint to your environment variables.
-
-# doc = Document()
+API_KEY='a5a7b1596f004ce388e75a72763d7bda'
+ENDPOINT='https://handwritten22.cognitiveservices.azure.com'
+cv_client= ComputerVisionClient(ENDPOINT,CognitiveServicesCredentials(API_KEY))
+doc = Document()
 
 def home(request):
 #     if request.method == 'POST' and request.FILES['upload']:
@@ -88,3 +107,65 @@ def home(request):
 #         return render(request, 'base.html', {'file_url':files,'urlu':h.text.url})
 
     return render(request,"index.html",)
+
+def verify(request):
+	info= request.GET.get('word')
+	g=Register.objects.create(text=info)
+	p=g.id
+	return JsonResponse({'result':p})
+
+
+def ver(request,key):
+	ki= Register.objects.get(id=key)
+	k=ki.text
+	return render(request,'verify.html',{'data':k})
+
+@csrf_exempt
+def result(request,key):
+	keys = request.POST.get('key')
+	ki= Register.objects.get(id=key)
+	k=ki.text	
+	kid=str(k)
+	ddd=kid
+	header, encoded = ddd.split(",", 1)
+	data = b64decode(encoded)
+
+	with open("media/specs/image.jpeg", "wb") as f:
+		f.write(data)
+	g='media/specs/image.jpeg'
+	response = cv_client.read_in_stream(open(g,'rb'),language='en',raw=True)
+	time.sleep(5)
+	operate= response.headers['Operation-Location']
+	operatid=operate.split('/')[-1]
+	result= cv_client.get_read_result(operatid)
+	print(result)
+	print(result.status)
+	final=''
+	if result.status == OperationStatusCodes.succeeded:
+		read_results= result.analyze_result.read_results
+		if os.path.exists("media/specs/hesjtigs.txt"):	
+			os.remove("media/specs/hesjtigs.txt")
+		for analyzed_result in read_results:
+			for line in analyzed_result.lines:
+				print(line.text)
+				wordss=str(line.text)
+
+				final=final+ wordss
+				hs=open("media/specs/hesjtigs.txt","a")
+				hs.write(line.text + "\n")
+				hs.close()
+	Register.objects.filter(text="specs/hesjtigs.txt").delete()
+	g=Register.objects.create(text="specs/hesjtigs.txt")
+	h=Register.objects.get(text="specs/hesjtigs.txt")
+	print(h.text.url)
+	if os.path.exists('media/specs/result.docx'):
+		os.remove("media/specs/result.docx")
+	with open("media/specs/hesjtigs.txt", 'r', encoding='utf-8') as openfile:
+		line = openfile.read()
+		doc.add_paragraph(line)
+		doc.save('media/specs/result' + ".docx")
+	Register.objects.filter(text="specs/result.docx").delete()
+	dics=Register.objects.create(text="specs/result.docx")
+	dicsa=Register.objects.get(text="specs/result.docx")
+
+	return JsonResponse({'data':h.text.url,'result':dicsa.text.url})

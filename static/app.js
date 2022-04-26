@@ -60,7 +60,30 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices);
 click_button.addEventListener('click', function() {
    	canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
    	let image_data_url = canvas.toDataURL('image/jpeg');
+     let im=String(image_data_url)
+     $.ajax({
+      type: 'GET',
+      url: "verify/",
+      data: {
+         word: im,
+        
+             },
+      success: function(data) {
+      
 
+          window.location.href='http://127.0.0.1:8000/ver/'+ data.result
+
+      console.log("worked")
+      },
+      error: function (xhr,errmsg,err) {
+         // alert the error if any error occured
+         alert(["error check your internet connection"]);
+         console.log('form error')
+     }
+
+ });
    	// data url of the image
+
    	console.log(image_data_url);
+
 });
