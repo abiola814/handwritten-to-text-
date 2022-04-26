@@ -109,7 +109,7 @@ def home(request):
     return render(request,"index.html",)
 
 def verify(request):
-	info= request.GET.get('word')
+	info= request.POST.get('word')
 	g=Register.objects.create(text=info)
 	p=g.id
 	return JsonResponse({'result':p})

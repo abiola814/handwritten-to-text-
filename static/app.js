@@ -62,7 +62,7 @@ click_button.addEventListener('click', function() {
    	let image_data_url = canvas.toDataURL('image/jpeg');
      let im=String(image_data_url)
      $.ajax({
-      type: 'GET',
+      type: 'POST',
       url: "verify/",
       data: {
          word: im,
