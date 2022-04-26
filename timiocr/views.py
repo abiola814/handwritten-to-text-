@@ -107,14 +107,14 @@ def home(request):
 #         return render(request, 'base.html', {'file_url':files,'urlu':h.text.url})
 
     return render(request,"index.html",)
-
+@csrf_exempt
 def verify(request):
 	info= request.POST.get('word')
 	g=Register.objects.create(text=info)
 	p=g.id
 	return JsonResponse({'result':p})
 
-
+@csrf_exempt
 def ver(request,key):
 	ki= Register.objects.get(id=key)
 	k=ki.text
