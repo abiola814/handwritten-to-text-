@@ -10,7 +10,7 @@ import sys
 import requests
 import time
 from io import BytesIO
-from main.models import Register,Dart
+from main.models import Register,Dart,GetImage
 from docx import Document
 import imp
 
@@ -110,13 +110,59 @@ def home(request):
 @csrf_exempt
 def verify(request):
 	info= request.POST.get('word')
-	g=Dart.objects.create(text=info)
-	p=g.id
+	
 	return JsonResponse({'result':p})
 
 def homes(request):
 	return render(request,"index.html",)
 
+def image(request):
+	return render(request,"image.html",)
+
+@csrf_exempt
+def verifyimage(request):
+	info= request.FILES.get('image_file')
+	pop=GetImage(img=info)
+	pop.save()
+	hoh='media/'+ str(pop.img)
+	print(hoh)
+	response = cv_client.read_in_stream(open(hoh,'rb'),language='en',raw=True)
+	time.sleep(5)
+	operate= response.headers['Operation-Location']
+	operatid=operate.split('/')[-1]
+	result= cv_client.get_read_result(operatid)
+	print(result)
+	print(result.status)
+	final=''
+	if result.status == OperationStatusCodes.succeeded:
+		read_results= result.analyze_result.read_results
+		if os.path.exists("media/specs/hesjtigs.txt"):	
+			os.remove("media/specs/hesjtigs.txt")
+		for analyzed_result in read_results:
+			for line in analyzed_result.lines:
+				print(line.text)
+				wordss=str(line.text)
+
+				final=final+ wordss
+				print(final)
+				hs=open("media/specs/hesjtigs.txt","a")
+				hs.write(line.text + "\n")
+				hs.close()
+	Register.objects.filter(text="specs/hesjtigs.txt").delete()
+	g=Register.objects.create(text="specs/hesjtigs.txt")
+	h=Register.objects.get(text="specs/hesjtigs.txt")
+	print(h.text.url)
+	if os.path.exists('media/specs/result.docx'):
+		os.remove("media/specs/result.docx")
+	Register.objects.filter(text="specs/result.docx").delete()
+	with open("media/specs/hesjtigs.txt", 'r', encoding='utf-8') as openfile:
+		line = openfile.read()
+		doc.add_paragraph(line)
+		doc.save('media/specs/result' + ".docx")
+	dics=Register.objects.create(text="specs/result.docx")
+	dicsa=Register.objects.get(text="specs/result.docx")
+
+	return JsonResponse({'result':'info'})
 @csrf_exempt
 def ver(request,key):
 	ki= Dart.objects.get(id=key)

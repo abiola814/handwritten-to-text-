@@ -9,4 +9,9 @@ class Register(models.Model):
 
 class Dart(models.Model):
 	text = models.TextField(max_length=1000000)
-	
+
+
+class GetImage(models.Model):   
+    img = models.ImageField(upload_to="media")
+    class Meta:
+        db_table = "gallery"	

@@ -22,7 +22,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
+        path('verifyimage',views.verifyimage,name='verifyimage'),
       path('home/',views.homes,name='homes'),
+          path('image-upload/',views.image,name='image'),
         path('home/verify/',views.verify,name='verify'),
           path('ver/<int:key>/result/',views.result,name='result'),
          path('ver/<int:key>/',views.ver,name='ver')
