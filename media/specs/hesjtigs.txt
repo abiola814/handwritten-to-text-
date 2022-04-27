@@ -1,9 +1,36 @@
-f
-P
-We think Sometimes that poverty is
-only being hungry, naked and homeless.
-The poverty of being unwanted, unloved
-and uncared for is the greatest poverty
-We must start in our own homes to
-wate
-remedy this kind of poverty.
+Activities
+> moveit_setup_assistant
+Apr 14 13:00
+A
+Movelt Setup Assistant
+×
+Start
+?
+Define Virtual Joints
+Create a virtual joint between the base robot link and an external frame of reference. This allows to place the robot in the
+Self-Collisions
+world or on a mobile platform.
+Virtual Joints
+Virtual Joint Name:
+base_word_link
+Planning Groups
+Child Link:
+OO
+ur5_base_link
+Robot Poses
+Parent Frame Name:
+End Effectors
+world
+Joint Type:
+Passive Joints
+fixed
+......
+Controllers
+......
+Simulation
+3D Perception
+Author Information
+Configuration Files
+Save
+Cancel
+V visual collision

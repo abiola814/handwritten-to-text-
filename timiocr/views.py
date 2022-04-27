@@ -122,9 +122,9 @@ def image(request):
 @csrf_exempt
 def verifyimage(request):
 	info= request.FILES.get('image_file')
-	pop=GetImage(img=info)
+	pop=Register(text=info)
 	pop.save()
-	hoh='media/'+ str(pop.img)
+	hoh='media/'+ str(pop.text)
 	print(hoh)
 	response = cv_client.read_in_stream(open(hoh,'rb'),language='en',raw=True)
 	time.sleep(5)
