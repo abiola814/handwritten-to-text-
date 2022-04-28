@@ -76,6 +76,28 @@ a{
     padding: 8px 0;
 }
     </style>
+    <style>
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid blue;
+          border-bottom: 16px solid blue;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        </style>
     <body>
         <header>
             <h2>zixtech Image uploader with Jcrop </h2>
@@ -116,6 +138,7 @@ a{
                 </form>
             </div>
         </div>
+        <div id="changeclass" class=""></div>
 
         <div class="popup">
             <button id="close">&times;</button>
@@ -124,7 +147,7 @@ a{
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita distinctio fugiat alias iure qui, commodi minima magni ullam aliquam dignissimos?
             </p>
             <a href="https://handtotext2.herokuapp.com/media/specs/result.docx">download word version</a>
-            <a href="https://handtotext2.herokuapp.com/media/specs/hesjtigs.txt">download text version</a>
+            <a href="https://handtotext2.herokuapp.com/media/specs/results.txt">download text version</a>
         </div>
         <script type="text/javascript">
 
@@ -136,12 +159,14 @@ a{
     <script> 
         // wait for the DOM to be loaded 
         $(document).ready(function() { 
+            document.getElementById("changeclass").className = ""; 
             // bind 'myForm' and provide a simple callback function 
             $('#myForm').ajaxForm(function() { 
+                document.getElementById("changeclass").className = "";
                 document.querySelector(".popup").style.display = "block"; 
             }); 
         }); 
-
+        document.getElementById("changeclass").className = "";
         document.querySelector("#close").addEventListener("click", function(){
                 document.querySelector(".popup").style.display = "none";
             });
