@@ -137,8 +137,8 @@ def verifyimage(request):
 	final=''
 	if result.status == OperationStatusCodes.succeeded:
 		read_results= result.analyze_result.read_results
-		if os.path.exists("media/specs/hesjtigs.txt"):	
-			os.remove("media/specs/hesjtigs.txt")
+		if os.path.exists("media/specs/results.txt"):	
+			os.remove("media/specs/results.txt")
 		for analyzed_result in read_results:
 			for line in analyzed_result.lines:
 				print(line.text)
@@ -146,17 +146,17 @@ def verifyimage(request):
 
 				final=final+ wordss
 				print(final)
-				hs=open("media/specs/hesjtigs.txt","a")
+				hs=open("media/specs/results.txt","a")
 				hs.write(line.text + "\n")
 				hs.close()
-	Register.objects.filter(text="specs/hesjtigs.txt").delete()
-	g=Register.objects.create(text="specs/hesjtigs.txt")
-	h=Register.objects.get(text="specs/hesjtigs.txt")
+	Register.objects.filter(text="specs/results.txt").delete()
+	g=Register.objects.create(text="specs/results.txt")
+	h=Register.objects.get(text="specs/results.txt")
 	print(h.text.url)
 	if os.path.exists('media/specs/result.docx'):
 		os.remove("media/specs/result.docx")
 	Register.objects.filter(text="specs/result.docx").delete()
-	with open("media/specs/hesjtigs.txt", 'r', encoding='utf-8') as openfile:
+	with open("media/specs/results.txt", 'r', encoding='utf-8') as openfile:
 		line = openfile.read()
 		doc.add_paragraph(line)
 		doc.save('media/specs/result' + ".docx")
