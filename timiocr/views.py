@@ -110,7 +110,8 @@ def home(request):
 @csrf_exempt
 def verify(request):
 	info= request.POST.get('word')
-	
+	k=Register.objects.create(text=info)
+	p= k.id
 	return JsonResponse({'result':p})
 
 def homes(request):
