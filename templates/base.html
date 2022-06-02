@@ -12,9 +12,9 @@
 <body>
 <!-- partial:index.partial.html -->
 <div class="container">
+  <a class="items" href="{% url 'homes' %}">
   
-  <div class="items">
-    <a href="{% url 'homes' %}">
+   
     <div class="icon-wrapper">
       <i class="fa fa-file-text-o"></i>
     </div>
@@ -23,17 +23,18 @@
 
       <p>camera upload to text</p>
     </div>
-  </a>
-  </div>
-  <a href="{% url 'image' %}">
-  <div class="items">
+ 
+  
+</a>
+  <a class="items" href="{% url 'image' %}">
+  
     <div class="icon-wrapper">
       <i class="fa fa-th-list"></i>
     </div>
     <div class="project-name">
       <p>image upload to text</p>
     </div>
-  </div>
+  
 </a>
   <div class="items">
     <div class="icon-wrapper">

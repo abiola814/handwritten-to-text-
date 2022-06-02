@@ -30,7 +30,7 @@ from base64 import b64decode
 
 # missing_env = False
 # # Add your Computer Vision subscription key and endpoint to your environment variables.
-API_KEY='a5a7b1596f004ce388e75a72763d7bda'
+API_KEY='15a919c8296b48498e7938332a799fe2'
 ENDPOINT='https://handwritten22.cognitiveservices.azure.com'
 cv_client= ComputerVisionClient(ENDPOINT,CognitiveServicesCredentials(API_KEY))
 doc = Document()
@@ -193,8 +193,8 @@ def result(request,key):
 	final=''
 	if result.status == OperationStatusCodes.succeeded:
 		read_results= result.analyze_result.read_results
-		if os.path.exists("media/specs/hesjtigs.txt"):	
-			os.remove("media/specs/hesjtigs.txt")
+		if os.path.exists("media/specs/read.txt"):	
+			os.remove("media/specs/read.txt")
 		for analyzed_result in read_results:
 			for line in analyzed_result.lines:
 				print(line.text)
@@ -202,17 +202,17 @@ def result(request,key):
 
 				final=final+ wordss
 				print(final)
-				hs=open("media/specs/hesjtigs.txt","a")
+				hs=open("media/specs/read.txt","a")
 				hs.write(line.text + "\n")
 				hs.close()
-	Register.objects.filter(text="specs/hesjtigs.txt").delete()
-	g=Register.objects.create(text="specs/hesjtigs.txt")
-	h=Register.objects.get(text="specs/hesjtigs.txt")
+	Register.objects.filter(text="specs/read.txt").delete()
+	g=Register.objects.create(text="specs/read.txt")
+	h=Register.objects.get(text="specs/read.txt")
 	print(h.text.url)
 	if os.path.exists('media/specs/result.docx'):
 		os.remove("media/specs/result.docx")
 	Register.objects.filter(text="specs/result.docx").delete()
-	with open("media/specs/hesjtigs.txt", 'r', encoding='utf-8') as openfile:
+	with open("media/specs/read.txt", 'r', encoding='utf-8') as openfile:
 		line = openfile.read()
 		doc.add_paragraph(line)
 		doc.save('media/specs/result' + ".docx")

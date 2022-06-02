@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="{% static 'app.css' %}" />
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="{%  static 'js/jquery-3.6.0.js' %}" crossorigin="anonymous"></script>
+  <script src="{% static 'jquery.min.js'  %}"></script>
+  <script src="{% static 'jquery.Jcrop.min.js'  %}"></script>
+  <script src="{% static 'script.js'  %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+  <script src="https://malsup.github.io/jquery.form.js"></script>
+
 
 <style>
   .container{
@@ -27,14 +33,78 @@
     z-index: 1; 
 }
 </style>
+<style media="screen">
+  *,
+*:before,
+*:after{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+
+.popup{
+background-color: #f6f6ffe8;
+width: 420px;
+padding: 30px 40px;
+position: absolute;
+transform: translate(-50%,-50%);
+left: 50%;
+top: 50%;
+border-radius: 8px;
+font-family: "Poppins",sans-serif;
+display: none; 
+text-align: center;
+}
+.popup button{
+display: block;
+margin:  0 0 20px auto;
+background-color: transparent;
+font-size: 30px;
+color: #ffffff;
+background: #03549a;
+border-radius: 100%;
+width: 40px;
+height: 40px;
+border: none;
+outline: none;
+cursor: pointer;
+}
+.popup h2{
+margin-top: -20px;
+}
+.popup p{
+font-size: 14px;
+text-align: justify;
+margin: 20px 0;
+line-height: 25px;
+}
+a{
+display: block;
+width: 150px;
+position: relative;
+margin: 10px auto;
+text-align: center;
+background-color: #0f72e5;
+border-radius: 20px;
+color: #ffffff;
+text-decoration: none;
+padding: 8px 0;
+}
+</style>
 <style>
   .loader {
+    position: absolute;
+    top: 50%;
+      left: 50%;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid blue;
     border-bottom: 16px solid blue;
-    width: 120px;
-    height: 120px;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
   }
@@ -49,34 +119,89 @@
     100% { transform: rotate(360deg); }
   }
   </style>
+  <style>
+    #text{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 50px;
+      color: white;
+      transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+    }
+    </style>
+    <style>
+      #overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+    </style>
 </head>
 
 <body>
 
   <header>
-    <h1>view frame</h1>
+    <h1>view image</h1>
   </header>
 
   <main>
-<img class="img-icons" src="{{data}}" alt="Eidoo">
+<img class="img-icons" src="{{data}}" alt="Eidoo" style="width: 100%;">
   </main>
                 
 <button type="button" id="button" > convert </button>
-<div id="changeclass" class=""></div>
 
-<a href="" id="wtype">dowmload text file</a>
+<div id="overlay">
 
-<a href="" id="wtypes">dowmload doc file</a>
+<div id="changeclass" class="">
+
+</div>
+</div>
+
+<div class="popup">
+  <button id="close">&times;</button>
+  <h2>Automatic Pop-Up</h2>
+  <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita distinctio fugiat alias iure qui, commodi minima magni ullam aliquam dignissimos?
+  </p>
+  <a href="" id="wtype">dowmload text file</a>
+
+  <a href="" id="wtypes">dowmload doc file</a>
+</div>
   <footer>
     <p>Built by
-      <a href="#">@pastor timi</a>
+      <a href="#">@timi</a>
     </p>
   </footer>
-
   <script>
+
+            
+    document.querySelector("#close").addEventListener("click", function(){
+        document.querySelector(".popup").style.display = "none";
+        document.getElementById("changeclass").className = ""; 
+        document.getElementById("overlay").style.display = "none";
+                   document.getElementById("changeclass").className = ""; 
+    });
+        </script>
+  <script>
+    document.querySelector(".popup").style.display = "none";
+    document.getElementById("changeclass").className = ""; 
+        document.getElementById("overlay").style.display = "none";
+                   document.getElementById("changeclass").className = ""; 
+
 $("button").click(function(e) {
     e.preventDefault();
+    document.getElementById("overlay").style.display = "block";
     document.getElementById("changeclass").className = "loader"; 
+    document.querySelector(".popup").style.display = "none";
               console.log('form submitted')
               let keys = "{{data}}";
      
@@ -93,11 +218,17 @@ $("button").click(function(e) {
                  success: function(data) {
                    console.log(data.data)
                    document.getElementById("changeclass").className = ""; 
+                   document.getElementById("overlay").style.display = "none";
+                   document.getElementById("changeclass").className = ""; 
                   document.getElementById("wtype").href=data.data;
-                  document.getElementById("wtypes").href=data.result;                
+                  document.getElementById("wtypes").href=data.result;  
+                  document.querySelector(".popup").style.display = "block";               
                   
                  },
                  error: function (xhr,errmsg,err) {
+                  document.querySelector(".popup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+                   document.getElementById("changeclass").className = ""; 
                     // alert the error if any error occured
                     alert(["error check your internet connection"]);
                     console.log('form error')
