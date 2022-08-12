@@ -1,6 +1,6 @@
 # handwritten-to-text python web application 
 
-web application link [handwritten text to digit text](https:handtotext2.herokuapp.com)
+web application link [handwritten text to digit text](https://handtotext2.herokuapp.com)
 
 ## setup an environment 
 ```
