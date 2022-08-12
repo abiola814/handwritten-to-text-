@@ -21,6 +21,15 @@ azure was used to host the machine learning algorithm. steps needed
 - deploy train and test with your machine model script
 - insert the endpoint and api key to the view.py found in timiocr folder
 
+## configure git on virtual environment
+```
+git config --global user.name "Your Name"
+git config --global user.email "you@youraddress.com"
+git config --global push.default matching
+git config --global alias.co checkout
+git init
+```
+
 ## deploy to heroku
 - create heroku account
 - download heroku cli tool
