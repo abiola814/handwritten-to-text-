@@ -6,9 +6,9 @@
 
 */
 
-takePhotoButton = document.getElementById('takePhotoButton');
-takePhotoButton.addEventListener('click', function () {
-  var canvas = document.createElement('canvas');
+takePhotoButton = document.getElementById("takePhotoButton");
+takePhotoButton.addEventListener("click", function () {
+  var canvas = document.createElement("canvas");
 
   var width = video.videoWidth;
   var height = video.videoHeight;
@@ -16,31 +16,29 @@ takePhotoButton.addEventListener('click', function () {
   canvas.width = width;
   canvas.height = height;
 
-  context = canvas.getContext('2d');
+  context = canvas.getContext("2d");
   context.drawImage(video, 0, 0, width, height);
-  let image_data_url = canvas.toDataURL('image/jpeg')
-  let im=String(image_data_url)
-  
-    $.ajax({
-      type: 'POST',
-      url: "verify/",
-      data: {
-         word: im,
-        
-             },
-      success: function(data) {
+  let image_data_url = canvas.toDataURL("image/jpeg");
+  let im = String(image_data_url);
 
-          window.location.href='https://handtotext2.herokuapp.com/ver/'+ data.result
+  $.ajax({
+    type: "POST",
+    url: "verify/",
+    data: {
+      word: im,
+    },
+    success: function (data) {
+      window.location.href =
+        "https://handwritten2text.onrender.com/ver/" + data.result;
 
-      console.log("worked")
-      },
-      error: function (xhr,errmsg,err) {
-         // alert the error if any error occured
-         alert(["error check your internet connection"]);
-         console.log('form error')
-     }
-
- });
+      console.log("worked");
+    },
+    error: function (xhr, errmsg, err) {
+      // alert the error if any error occured
+      alert(["error check your internet connection"]);
+      console.log("form error");
+    },
+  });
 });
 
 var takeSnapshotUI = createClickFeedbackUI();
@@ -50,7 +48,7 @@ var takePhotoButton;
 var toggleFullScreenButton;
 var switchCameraButton;
 var amountOfCameras = 0;
-var currentFacingMode = 'environment';
+var currentFacingMode = "environment";
 
 // this function counts the amount of video inputs
 // it replaces DetectRTC that was previously implemented.
@@ -62,26 +60,26 @@ function deviceCount() {
       .enumerateDevices()
       .then(function (devices) {
         devices.forEach(function (device) {
-          if (device.kind === 'video') {
-            device.kind = 'videoinput';
+          if (device.kind === "video") {
+            device.kind = "videoinput";
           }
 
-          if (device.kind === 'videoinput') {
+          if (device.kind === "videoinput") {
             videoInCount++;
-            console.log('videocam: ' + device.label);
+            console.log("videocam: " + device.label);
           }
         });
 
         resolve(videoInCount);
       })
       .catch(function (err) {
-        console.log(err.name + ': ' + err.message);
+        console.log(err.name + ": " + err.message);
         resolve(0);
       });
   });
 }
 
-document.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener("DOMContentLoaded", function (event) {
   // check if mediaDevices is supported
   if (
     navigator.mediaDevices &&
@@ -111,30 +109,30 @@ document.addEventListener('DOMContentLoaded', function (event) {
       })
       .catch(function (error) {
         //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-        if (error === 'PermissionDeniedError') {
-          alert('Permission denied. Please refresh and give permission.');
+        if (error === "PermissionDeniedError") {
+          alert("Permission denied. Please refresh and give permission.");
         }
 
-        console.error('getUserMedia() error: ', error);
+        console.error("getUserMedia() error: ", error);
       });
   } else {
     alert(
-      'Mobile camera is not supported by browser, or there is no camera detected/connected',
+      "Mobile camera is not supported by browser, or there is no camera detected/connected"
     );
   }
 });
 
 function initCameraUI() {
-  video = document.getElementById('video');
+  video = document.getElementById("video");
 
-  takePhotoButtons = document.getElementById('takePhotoButton');
-  toggleFullScreenButton = document.getElementById('toggleFullScreenButton');
-  switchCameraButton = document.getElementById('switchCameraButton');
+  takePhotoButtons = document.getElementById("takePhotoButton");
+  toggleFullScreenButton = document.getElementById("toggleFullScreenButton");
+  switchCameraButton = document.getElementById("switchCameraButton");
 
   // https://developer.mozilla.org/nl/docs/Web/HTML/Element/button
   // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role
 
-  takePhotoButtons.addEventListener('click', function () {
+  takePhotoButtons.addEventListener("click", function () {
     takeSnapshotUI();
     takeSnapshot();
   });
@@ -143,25 +141,25 @@ function initCameraUI() {
 
   function fullScreenChange() {
     if (screenfull.isFullscreen) {
-      toggleFullScreenButton.setAttribute('aria-pressed', true);
+      toggleFullScreenButton.setAttribute("aria-pressed", true);
     } else {
-      toggleFullScreenButton.setAttribute('aria-pressed', false);
+      toggleFullScreenButton.setAttribute("aria-pressed", false);
     }
   }
 
   if (screenfull.isEnabled) {
-    screenfull.on('change', fullScreenChange);
+    screenfull.on("change", fullScreenChange);
 
-    toggleFullScreenButton.style.display = 'block';
+    toggleFullScreenButton.style.display = "block";
 
     // set init values
     fullScreenChange();
 
-    toggleFullScreenButton.addEventListener('click', function () {
-      screenfull.toggle(document.getElementById('container')).then(function () {
+    toggleFullScreenButton.addEventListener("click", function () {
+      screenfull.toggle(document.getElementById("container")).then(function () {
         console.log(
-          'Fullscreen mode: ' +
-            (screenfull.isFullscreen ? 'enabled' : 'disabled'),
+          "Fullscreen mode: " +
+            (screenfull.isFullscreen ? "enabled" : "disabled")
         );
       });
     });
@@ -171,11 +169,11 @@ function initCameraUI() {
 
   // -- switch camera part
   if (amountOfCameras > 1) {
-    switchCameraButton.style.display = 'block';
+    switchCameraButton.style.display = "block";
 
-    switchCameraButton.addEventListener('click', function () {
-      if (currentFacingMode === 'environment') currentFacingMode = 'user';
-      else currentFacingMode = 'environment';
+    switchCameraButton.addEventListener("click", function () {
+      if (currentFacingMode === "environment") currentFacingMode = "user";
+      else currentFacingMode = "environment";
 
       initCameraStream();
     });
@@ -186,22 +184,22 @@ function initCameraUI() {
   // https://www.sitepoint.com/introducing-screen-orientation-api/
   // https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
   window.addEventListener(
-    'orientationchange',
+    "orientationchange",
     function () {
       // iOS doesn't have screen.orientation, so fallback to window.orientation.
       // screen.orientation will
       if (screen.orientation) angle = screen.orientation.angle;
       else angle = window.orientation;
 
-      var guiControls = document.getElementById('gui_controls').classList;
-      var vidContainer = document.getElementById('vid_container').classList;
+      var guiControls = document.getElementById("gui_controls").classList;
+      var vidContainer = document.getElementById("vid_container").classList;
 
       if (angle == 270 || angle == -90) {
-        guiControls.add('left');
-        vidContainer.add('left');
+        guiControls.add("left");
+        vidContainer.add("left");
       } else {
-        if (guiControls.contains('left')) guiControls.remove('left');
-        if (vidContainer.contains('left')) vidContainer.remove('left');
+        if (guiControls.contains("left")) guiControls.remove("left");
+        if (vidContainer.contains("left")) vidContainer.remove("left");
       }
 
       //0   portrait-primary
@@ -209,7 +207,7 @@ function initCameraUI() {
       //90  landscape-primary  buttons at the right
       //270 landscape-secondary buttons at the left
     },
-    false,
+    false
   );
 }
 
@@ -248,27 +246,27 @@ function initCameraStream() {
     video.srcObject = stream;
 
     if (constraints.video.facingMode) {
-      if (constraints.video.facingMode === 'environment') {
-        switchCameraButton.setAttribute('aria-pressed', true);
+      if (constraints.video.facingMode === "environment") {
+        switchCameraButton.setAttribute("aria-pressed", true);
       } else {
-        switchCameraButton.setAttribute('aria-pressed', false);
+        switchCameraButton.setAttribute("aria-pressed", false);
       }
     }
 
     const track = window.stream.getVideoTracks()[0];
     const settings = track.getSettings();
     str = JSON.stringify(settings, null, 4);
-    console.log('settings ' + str);
+    console.log("settings " + str);
   }
 
   function handleError(error) {
-    console.error('getUserMedia() error: ', error);
+    console.error("getUserMedia() error: ", error);
   }
 }
 
 function takeSnapshot() {
   // if you'd like to show the canvas add it to the DOM
-  var canvas = document.createElement('canvas');
+  var canvas = document.createElement("canvas");
 
   var width = video.videoWidth;
   var height = video.videoHeight;
@@ -276,11 +274,10 @@ function takeSnapshot() {
   canvas.width = width;
   canvas.height = height;
 
-  context = canvas.getContext('2d');
+  context = canvas.getContext("2d");
   context.drawImage(video, 0, 0, width, height);
-  let image_data_url = canvas.toDataURL('image/jpeg');
-  console.log(image_data_url)
-  
+  let image_data_url = canvas.toDataURL("image/jpeg");
+  console.log(image_data_url);
 
   // polyfil if needed https://github.com/blueimp/JavaScript-Canvas-to-Blob
 
@@ -290,13 +287,12 @@ function takeSnapshot() {
     return new Promise(function (resolve, reject) {
       canvas.toBlob(function (blob) {
         resolve(blob);
-      }, 'image/jpeg');
+      }, "image/jpeg");
     });
   }
 
   // some API's (like Azure Custom Vision) need a blob with image data
   getCanvasBlob(canvas).then(function (blob) {
-    
     // do something with the image blob
   });
 }
@@ -309,24 +305,24 @@ function takeSnapshot() {
 function createClickFeedbackUI() {
   // in order to give feedback that we actually pressed a button.
   // we trigger a almost black overlay
-  var overlay = document.getElementById('video_overlay'); //.style.display;
+  var overlay = document.getElementById("video_overlay"); //.style.display;
 
   // sound feedback
-  var sndClick = new Howl({ src: ['snd/clickss.mp3'] });
+  var sndClick = new Howl({ src: ["snd/clickss.mp3"] });
 
   var overlayVisibility = false;
   var timeOut = 80;
 
   function setFalseAgain() {
     overlayVisibility = false;
-    overlay.style.display = 'none';
+    overlay.style.display = "none";
   }
 
   return function () {
     if (overlayVisibility == false) {
       sndClick.play();
       overlayVisibility = true;
-      overlay.style.display = 'block';
+      overlay.style.display = "block";
       setTimeout(setFalseAgain, timeOut);
     }
   };
