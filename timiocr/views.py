@@ -12,7 +12,7 @@ import time
 from io import BytesIO
 from main.models import Register,Dart,GetImage
 from docx import Document
-import imp
+
 
 
 import os
