@@ -133,4 +133,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
-django_heroku.settings(locals())
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

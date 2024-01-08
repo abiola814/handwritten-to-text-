@@ -1,2 +1,19 @@
-------
-66219
+Feature
+Mini Ultra Thin contracted type structure
+Chocolate Keyboard
+Never get stuck.
+Brand new ABS plastic, Antibacterial and durable of keyboard
+≥ 10 Million tims
+> Waterproof keyboard with no sound and Elegant design
+It's accurate key system and quick in action of the key when touch
+with Chocolate key feel more comfortable
+MECHANICAL SPECIFICATIONS
+ELECTRICAL SPECIFICATIONS
+Total travel:3.0 + 0.4mm
+Insulation resistance: 100m OHM at 10.
+Initial actuating force: 25cn min
+Contact bounce: 5ms mar
+Operating force : 55 + 5cn
+Operation voltage: #5V DC
+Function: Normally open contact
+Operation current: 250mAma

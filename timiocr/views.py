@@ -30,8 +30,8 @@ from base64 import b64decode
 
 # missing_env = False
 # # Add your Computer Vision subscription key and endpoint to your environment variables.
-API_KEY='15a919c8296b48498e7938332a799fe2'
-ENDPOINT='https://handwritten22.cognitiveservices.azure.com'
+API_KEY='17d15ddf4f3d4405a90a63780f748a1b'
+ENDPOINT='https://handwritten2text.cognitiveservices.azure.com/'
 cv_client= ComputerVisionClient(ENDPOINT,CognitiveServicesCredentials(API_KEY))
 doc = Document()
 
@@ -46,7 +46,7 @@ def home(request):
 #         text_recognition_url = endpoint + "/vision/v3.1/read/analyze"
 
 # # Set image_url to the URL of an image that you want to recognize.
-#         image_url = 'https://handtotext2.herokuapp.com/media/'+ upload.name
+#         image_url = 'https://handwritten2text.onrender.com/media/'+ upload.name
 #         headers = {'Ocp-Apim-Subscription-Key': subscription_key}
 
 #         data = {'url': image_url}
@@ -132,7 +132,7 @@ def verifyimage(request):
 	operate= response.headers['Operation-Location']
 	operatid=operate.split('/')[-1]
 	result= cv_client.get_read_result(operatid)
-	print(result)
+	print("kkkk",result)
 	print(result.status)
 	final=''
 	if result.status == OperationStatusCodes.succeeded:
@@ -179,6 +179,7 @@ def result(request,key):
 	ddd=kid
 	header, encoded = ddd.split(",", 1)
 	data = b64decode(encoded)
+	print(data)
 
 	with open("media/specs/image.jpeg", "wb") as f:
 		f.write(data)
@@ -189,13 +190,14 @@ def result(request,key):
 	operatid=operate.split('/')[-1]
 	result= cv_client.get_read_result(operatid)
 	print(result)
-	print(result.status)
+	print("lllllll",result.status)
 	final=''
 	if result.status == OperationStatusCodes.succeeded:
 		read_results= result.analyze_result.read_results
 		if os.path.exists("media/specs/read.txt"):	
 			os.remove("media/specs/read.txt")
 		for analyzed_result in read_results:
+			print("for lopp dstarted",analyzed_result.lines)
 			for line in analyzed_result.lines:
 				print(line.text)
 				wordss=str(line.text)

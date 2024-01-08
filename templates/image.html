@@ -1,176 +1,204 @@
 {% load static %}
 <!DOCTYPE html>
 <!-- saved from url=(0053)https://www.script-tutorials.com/demos/316/index.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        <meta name="author" content="Script Tutorials">
-        <title>HTML5 Image uploader with Jcrop | Script Tutorials</title>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <!-- add styles -->
-        <link href="{% static 'main.css'  %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'jquery.Jcrop.min.css'  %}" rel="stylesheet" type="text/css">
+    <meta name="author" content="Script Tutorials" />
+    <title>HTML5 Image uploader with Jcrop | Script Tutorials</title>
 
-        <!-- add scripts -->
-        <script src="{% static 'jquery.min.js'  %}"></script>
-        <script src="{% static 'jquery.Jcrop.min.js'  %}"></script>
-        <script src="{% static 'script.js'  %}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-        <script src="https://malsup.github.io/jquery.form.js"></script>
-    </head>
-    <style media="screen">
-    	*,
-*:before,
-*:after{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+    <!-- add styles -->
+    <link href="{% static 'main.css'  %}" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'jquery.Jcrop.min.css'  %}"
+      rel="stylesheet"
+      type="text/css"
+    />
 
+    <!-- add scripts -->
+    <script src="{% static 'jquery.min.js'  %}"></script>
+    <script src="{% static 'jquery.Jcrop.min.js'  %}"></script>
+    <script src="{% static 'script.js'  %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script src="https://malsup.github.io/jquery.form.js"></script>
+  </head>
+  <style media="screen">
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
 
-.popup{
-    background-color: #f6f6ffe8;
-    width: 420px;
-    padding: 30px 40px;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    left: 50%;
-    top: 50%;
-    border-radius: 8px;
-    font-family: "Poppins",sans-serif;
-    display: none; 
-    text-align: center;
-}
-.popup button{
-    display: block;
-    margin:  0 0 20px auto;
-    background-color: transparent;
-    font-size: 30px;
-    color: #ffffff;
-		background: #03549a;
-		border-radius: 100%;
-		width: 40px;
-		height: 40px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
-.popup h2{
-	margin-top: -20px;
-}
-.popup p{
-    font-size: 14px;
-    text-align: justify;
-    margin: 20px 0;
-    line-height: 25px;
-}
-a{
-    display: block;
-    width: 150px;
-    position: relative;
-    margin: 10px auto;
-    text-align: center;
-    background-color: #0f72e5;
-		border-radius: 20px;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 8px 0;
-}
-    </style>
-    <style>
-        .loader {
-          border: 16px solid #f3f3f3;
-          border-radius: 50%;
-          border-top: 16px solid blue;
-          border-bottom: 16px solid blue;
-          width: 120px;
-          height: 120px;
-          -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
-        }
-        
-        @-webkit-keyframes spin {
-          0% { -webkit-transform: rotate(0deg); }
-          100% { -webkit-transform: rotate(360deg); }
-        }
-        
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        </style>
-    <body>
-        <header>
-            <h2>zixtech Image uploader with Jcrop </h2>
-        </header>
+    .popup {
+      background-color: #f6f6ffe8;
+      width: 420px;
+      padding: 30px 40px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+      border-radius: 8px;
+      font-family: "Poppins", sans-serif;
+      display: none;
+      text-align: center;
+    }
+    .popup button {
+      display: block;
+      margin: 0 0 20px auto;
+      background-color: transparent;
+      font-size: 30px;
+      color: #ffffff;
+      background: #03549a;
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+    .popup h2 {
+      margin-top: -20px;
+    }
+    .popup p {
+      font-size: 14px;
+      text-align: justify;
+      margin: 20px 0;
+      line-height: 25px;
+    }
+    a {
+      display: block;
+      width: 150px;
+      position: relative;
+      margin: 10px auto;
+      text-align: center;
+      background-color: #0f72e5;
+      border-radius: 20px;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 8px 0;
+    }
+  </style>
+  <style>
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid blue;
+      border-bottom: 16px solid blue;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
 
-        <div class="demo">
-            <div class="bheader"><h2>-- Image upload form --</h2></div>
-            <div class="bbody">
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
 
-                <!-- upload form -->
-                <form id="myForm" enctype="multipart/form-data" method="post" action="{% url 'verifyimage' %}">
-                    {% csrf_token %}
-                    <!-- hidden crop params -->
-                    <input type="hidden" id="x1" name="x1">
-                    <input type="hidden" id="y1" name="y1">
-                    <input type="hidden" id="x2" name="x2">
-                    <input type="hidden" id="y2" name="y2">
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <body>
+    <header>
+      <h2>zixtech Image uploader with Jcrop</h2>
+    </header>
 
-                    <h2>Step1: Please select image file</h2>
-                    <div><input type="file" name="image_file" id="image_file" onchange="fileSelectHandler()"></div>
+    <div class="demo">
+      <div class="bheader"><h2>-- Image upload form --</h2></div>
+      <div class="bbody">
+        <!-- upload form -->
+        <form
+          id="myForm"
+          enctype="multipart/form-data"
+          method="post"
+          action="{% url 'verifyimage' %}"
+        >
+          {% csrf_token %}
+          <!-- hidden crop params -->
+          <input type="hidden" id="x1" name="x1" />
+          <input type="hidden" id="y1" name="y1" />
+          <input type="hidden" id="x2" name="x2" />
+          <input type="hidden" id="y2" name="y2" />
 
-                    <div class="error"></div>
+          <h2>Step1: Please select image file</h2>
+          <div>
+            <input
+              type="file"
+              name="image_file"
+              id="image_file"
+              onchange="fileSelectHandler()"
+            />
+          </div>
 
-                    <div class="step2">
-                        <h2>Step2: Please select a crop region</h2>
-                        <img id="preview">
+          <div class="error"></div>
 
-                        <div class="info">
-                            <label>File size</label> <input type="text" id="filesize" name="filesize">
-                            <label>Type</label> <input type="text" id="filetype" name="filetype">
-                            <label>Image dimension</label> <input type="text" id="filedim" name="filedim">
-                            <label>W</label> <input type="text" id="w" name="w">
-                            <label>H</label> <input type="text" id="h" name="h">
-                        </div>
+          <div class="step2">
+            <h2>Step2: Please select a crop region</h2>
+            <img id="preview" />
 
-                        <input type="submit" value="Upload">
-                    </div>
-                </form>
+            <div class="info">
+              <label>File size</label>
+              <input type="text" id="filesize" name="filesize" />
+              <label>Type</label>
+              <input type="text" id="filetype" name="filetype" />
+              <label>Image dimension</label>
+              <input type="text" id="filedim" name="filedim" />
+              <label>W</label> <input type="text" id="w" name="w" />
+              <label>H</label> <input type="text" id="h" name="h" />
             </div>
-        </div>
-        <div id="changeclass" class=""></div>
 
-        <div class="popup">
-            <button id="close">&times;</button>
-            <h2>Automatic Pop-Up</h2>
-            <p>
-                the image is convert to text and then click the download text to download the file 
+            <input type="submit" value="Upload" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="changeclass" class=""></div>
 
-            </p>
-            <!-- <a href="https://handtotext2.herokuapp.com/media/specs/result.docx">download word version</a> -->
-            <a href="/">Go back</a>
-            <a href="https://handtotext2.herokuapp.com/media/specs/results.txt">download text version</a>
-        </div>
-        <script type="text/javascript">
-
-            document.querySelector("#close").addEventListener("click", function(){
-                document.querySelector(".popup").style.display = "none";
-            });
-                </script>
-    <script> 
-        // wait for the DOM to be loaded 
-        $(document).ready(function() { 
-            document.getElementById("changeclass").className = ""; 
-            // bind 'myForm' and provide a simple callback function 
-            $('#myForm').ajaxForm(function() { 
-                document.getElementById("changeclass").className = "";
-                document.querySelector(".popup").style.display = "block"; 
-            }); 
-        }); 
-        document.getElementById("changeclass").className = "";
-        document.querySelector("#close").addEventListener("click", function(){
-                document.querySelector(".popup").style.display = "none";
-            });
-                
+    <div class="popup">
+      <button id="close">&times;</button>
+      <h2>Automatic Pop-Up</h2>
+      <p>
+        the image is convert to text and then click the download text to
+        download the file
+      </p>
+      <!-- <a href="https://handwritten2text.onrender.com/media/specs/result.docx">download word version</a> -->
+      <a href="/">Go back</a>
+      <a href="https://handwritten2text.onrender.com/media/specs/results.txt"
+        >download text version</a
+      >
+    </div>
+    <script type="text/javascript">
+      document.querySelector("#close").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "none";
+      });
     </script>
-</body></html>
+    <script>
+      // wait for the DOM to be loaded
+      $(document).ready(function () {
+        document.getElementById("changeclass").className = "";
+        // bind 'myForm' and provide a simple callback function
+        $("#myForm").ajaxForm(function () {
+          document.getElementById("changeclass").className = "";
+          document.querySelector(".popup").style.display = "block";
+        });
+      });
+      document.getElementById("changeclass").className = "";
+      document.querySelector("#close").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
